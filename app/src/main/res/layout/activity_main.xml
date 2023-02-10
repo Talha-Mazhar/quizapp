@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".MainActivity">
+
+
+    <TextView
+        android:id="@+id/appname"
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:fontFamily="serif-monospace"
+        android:gravity="center"
+        android:text="Quiz App"
+        android:textColor="@color/gray92"
+        android:textSize="23sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022" />
+
+    <TextView
+        android:id="@+id/question"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:fontFamily="serif-monospace"
+        android:gravity="center"
+        android:text="Encapsulation is a concept of ?"
+        android:textColor="@color/gray92"
+        android:textSize="23sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appname"
+        app:layout_constraintVertical_bias="0.123" />
+
+    <Button
+        android:id="@+id/option1"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/background"
+        android:fontFamily="serif-monospace"
+        android:gravity="center"
+        android:text="a) Object Oriented Programming"
+        android:textAllCaps="false"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/question" />
+
+    <Button
+        android:id="@+id/option2"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:backgroundTint="@color/background"
+        android:text="b) Programming Fundamentals"
+        android:textSize="17sp"
+        android:fontFamily="serif-monospace"
+        android:textAllCaps="false"
+        android:gravity="center"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/option1" />
+    <Button
+        android:id="@+id/option3"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:backgroundTint="@color/background"
+        android:text="c) Network Security"
+        android:textSize="17sp"
+        android:fontFamily="serif-monospace"
+        android:textAllCaps="false"
+        android:gravity="center"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/option2" />
+    <Button
+        android:id="@+id/option4"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:backgroundTint="@color/background"
+        android:text="d) Data Structures and Algorithm"
+        android:textSize="17sp"
+        android:fontFamily="serif-monospace"
+        android:textAllCaps="false"
+        android:gravity="center"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/option3" />
+</androidx.constraintlayout.widget.ConstraintLayout>
