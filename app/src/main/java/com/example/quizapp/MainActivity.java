@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -76,6 +77,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         generaterandQuestions();
         generaterandOptions();
+        String [] setmcq = allmcqs.get(randomquestions.get(0));
+
+        question.setText(setmcq[0]);
+
+        a.setText(setmcq[1]);
+        b.setText(setmcq[2]);
+        c.setText(setmcq[3]);
+        d.setText(setmcq[4]);
     }
 
 
@@ -103,28 +112,68 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void setMcqs() {
+        int getindex = randomquestions.get(totalcount);
+        String [] getvalue = allmcqs.get(getindex);
+        String mcqvalue = getvalue[0];
+        question.setText(mcqvalue);
+        a.setText(getvalue[1]);
+        b.setText(getvalue[2]);
+        c.setText(getvalue[3]);
+        d.setText(getvalue[4]);
     }
 
-    public void createResult(String [] selected) {
-        resultCard.add(selected);
+    public void checkCorrectness (String value, String option) {
+        selectedData[0] = value;
+        selectedData[1] = option;
+        String [] mcq = {};
+        String oldvalue = "";
+        for (int i = 0; i <= allmcqs.size(); i++) {
+            mcq = allmcqs.get(i);
+            oldvalue = mcq[0];
+            selectedData[1] = oldvalue;
+            selectedData[3] = option;
+            allmcqs.add(selectedData);
+            String correctOption = mcq[mcq.length-1];
+            if (oldvalue.equals(value) && correctOption.equals(option)) {
+                totalcount++;
+            }
+        }
     }
 
     @Override
     public void onClick(View view) {
         totalcount++;
         String text = String.valueOf(totalcount);
+        Button newValue;
+        TextView nextmcq;
         switch (view.getId()) {
             case R.id.option1:
+                newValue = findViewById(R.id.option1);
+                nextmcq = findViewById(R.id.question);
                 questioncount.setText(text);
+                checkCorrectness(newValue.getText().toString(), nextmcq.getText().toString());
+                setMcqs();
                 break;
             case R.id.option2:
+                newValue = findViewById(R.id.option2);
+                nextmcq = findViewById(R.id.question);
                 questioncount.setText(text);
+                checkCorrectness(newValue.getText().toString(), nextmcq.getText().toString());
+                setMcqs();
                 break;
             case R.id.option3:
+                newValue = findViewById(R.id.option3);
+                nextmcq = findViewById(R.id.question);
                 questioncount.setText(text);
+                checkCorrectness(newValue.getText().toString(), nextmcq.getText().toString());
+                setMcqs();
                 break;
             case R.id.option4:
+                newValue = findViewById(R.id.option4);
+                nextmcq = findViewById(R.id.question);
                 questioncount.setText(text);
+                checkCorrectness(newValue.getText().toString(), nextmcq.getText().toString());
+                setMcqs();
                 break;
         }
     }
