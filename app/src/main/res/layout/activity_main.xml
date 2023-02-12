@@ -14,7 +14,7 @@
         android:layout_height="33dp"
         android:fontFamily="serif-monospace"
         android:gravity="center"
-        android:text="Quiz App"
+        android:text="Quizlet"
         android:textColor="@color/gray92"
         android:textSize="23sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,31 +25,54 @@
         app:layout_constraintVertical_bias="0.022" />
 
     <TextView
+        android:id="@+id/question1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:fontFamily="serif-monospace"
+        android:gravity="center"
+        android:text="Question"
+        android:textColor="@color/gray92"
+        android:textSize="23sp"
+        app:layout_constraintTop_toBottomOf="@+id/appname"
+        tools:layout_editor_absoluteX="0dp" />
+    <TextView
+        android:id="@+id/questioncount"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:fontFamily="serif-monospace"
+        android:gravity="center"
+        android:text="1"
+        android:textColor="@color/gray92"
+        android:textSize="23sp"
+        app:layout_constraintTop_toBottomOf="@+id/question1"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
         android:id="@+id/question"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:fontFamily="serif-monospace"
         android:gravity="center"
-        android:text="Encapsulation is a concept of ?"
+        android:text="In multilevel inheritance, which is the most significant feature of OOP used?"
         android:textColor="@color/gray92"
         android:textSize="23sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appname"
+        app:layout_constraintTop_toBottomOf="@+id/questioncount"
         app:layout_constraintVertical_bias="0.123" />
 
     <Button
         android:id="@+id/option1"
         style="?android:attr/borderlessButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_width="412dp"
+        android:layout_height="82dp"
         android:layout_marginTop="32dp"
         android:backgroundTint="@color/background"
         android:fontFamily="serif-monospace"
         android:gravity="center"
-        android:text="a) Object Oriented Programming"
+        android:text="Code reusability"
         android:textAllCaps="false"
         android:textSize="17sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +84,7 @@
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:backgroundTint="@color/background"
-        android:text="b) Programming Fundamentals"
+        android:text="Code efficiency"
         android:textSize="17sp"
         android:fontFamily="serif-monospace"
         android:textAllCaps="false"
@@ -75,7 +98,7 @@
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:backgroundTint="@color/background"
-        android:text="c) Network Security"
+        android:text="Code readability"
         android:textSize="17sp"
         android:fontFamily="serif-monospace"
         android:textAllCaps="false"
@@ -89,7 +112,7 @@
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:backgroundTint="@color/background"
-        android:text="d) Data Structures and Algorithm"
+        android:text="Flexibility"
         android:textSize="17sp"
         android:fontFamily="serif-monospace"
         android:textAllCaps="false"
@@ -97,4 +120,5 @@
         app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/option3" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
