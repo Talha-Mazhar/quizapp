@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     String [] mcq1 = {"In multilevel inheritance, which is the most significant feature of OOP used?", "Code efficiency", "Code readability", "Flexibility", "Code reusability", "Code reusability"};
     String [] mcq2 = {"How many types of access specifiers are provided in OOP (C++)?", "1", "2", "3", "4", "3"};
@@ -30,10 +30,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView questioncount, question;
 
     //Populate it to generate Random mcqs
-    ArrayList<Integer> randomquestions = new ArrayList<Integer>();
+    String randomquestions = "";
 
     //popoulate to generate Random options
-    ArrayList<Integer> randomoptions = new ArrayList<Integer>();
+    String randomoptions = "";
 
     //Correct Answers
 
@@ -42,11 +42,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //totalcount
 
     int totalcount = 0;
-
+    int counter = 1;
     int totalcorrect = 0;
 
-    String [] selectedData = {};
-
+    ArrayList<String> selectedData = new ArrayList<String>();
     ArrayList<String[]> resultCard = new ArrayList<String[]>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,104 +76,116 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         generaterandQuestions();
         generaterandOptions();
-        String [] setmcq = allmcqs.get(randomquestions.get(0));
-
+        char e = randomquestions.charAt(0);
+        int f = Character.getNumericValue(e);
+        String [] setmcq = allmcqs.get(f);
         question.setText(setmcq[0]);
 
-        a.setText(setmcq[1]);
-        b.setText(setmcq[2]);
-        c.setText(setmcq[3]);
-        d.setText(setmcq[4]);
+        a.setText(setmcq[Character.getNumericValue(randomoptions.charAt(0))]);
+        b.setText(setmcq[Character.getNumericValue(randomoptions.charAt(1))]);
+        c.setText(setmcq[Character.getNumericValue(randomoptions.charAt(2))]);
+        d.setText(setmcq[Character.getNumericValue(randomoptions.charAt(3))]);
     }
 
 
     public void generaterandQuestions() {
-        int i = 0;
+        Integer i = 0;
         Random random = new Random();
         while (i < 10 ) {
-            int num = random.nextInt(9);
-            if (!randomquestions.contains(num)) {
+            Integer num = random.nextInt(10);
+            if (!randomquestions.contains(num.toString())) {
                 i++;
-                randomquestions.add(num);
+                randomquestions += num;
             }
         }
     }
     public void generaterandOptions() {
-        int i = 0;
+        Integer i = 0;
         Random random = new Random();
         while (i < 4 ) {
-            int num = random.nextInt(4) + 1;
-            if (!randomoptions.contains(num)) {
+            Integer num = random.nextInt(4) + 1;
+            if (!randomoptions.contains(num.toString())) {
                 i++;
-                randomoptions.add(num);
+                randomoptions += num;
             }
         }
     }
 
     public void setMcqs() {
-        int getindex = randomquestions.get(totalcount);
-        String [] getvalue = allmcqs.get(getindex);
-        String mcqvalue = getvalue[0];
-        question.setText(mcqvalue);
-        a.setText(getvalue[1]);
-        b.setText(getvalue[2]);
-        c.setText(getvalue[3]);
-        d.setText(getvalue[4]);
+        if (counter <= 11) {
+            char nextindex = randomquestions.charAt(totalcount);
+            int realindex = Character.getNumericValue(nextindex);
+            String [] getvalue = allmcqs.get(realindex);
+            String mcqvalue = getvalue[0];
+            question.setText(mcqvalue);
+            a.setText(getvalue[Character.getNumericValue(randomoptions.charAt(0))]);
+            b.setText(getvalue[Character.getNumericValue(randomoptions.charAt(1))]);
+            c.setText(getvalue[Character.getNumericValue(randomoptions.charAt(2))]);
+            d.setText(getvalue[Character.getNumericValue(randomoptions.charAt(3))]);
+        }
     }
 
-    public void checkCorrectness (String value, String option) {
-        selectedData[0] = value;
-        selectedData[1] = option;
+    public void checkCorrectness (String option, String value) {
+        selectedData.add(value);
         String [] mcq = {};
         String oldvalue = "";
-        for (int i = 0; i <= allmcqs.size(); i++) {
+        for (int i = 0; i < allmcqs.size(); i++) {
             mcq = allmcqs.get(i);
             oldvalue = mcq[0];
-            selectedData[1] = oldvalue;
-            selectedData[3] = option;
-            allmcqs.add(selectedData);
             String correctOption = mcq[mcq.length-1];
             if (oldvalue.equals(value) && correctOption.equals(option)) {
-                totalcount++;
+                selectedData.add(correctOption);
+                selectedData.add(option);
+                totalcorrect++;
             }
         }
     }
 
     @Override
     public void onClick(View view) {
-        totalcount++;
-        String text = String.valueOf(totalcount);
-        Button newValue;
-        TextView nextmcq;
-        switch (view.getId()) {
-            case R.id.option1:
-                newValue = findViewById(R.id.option1);
-                nextmcq = findViewById(R.id.question);
-                questioncount.setText(text);
-                checkCorrectness(newValue.getText().toString(), nextmcq.getText().toString());
-                setMcqs();
-                break;
-            case R.id.option2:
-                newValue = findViewById(R.id.option2);
-                nextmcq = findViewById(R.id.question);
-                questioncount.setText(text);
-                checkCorrectness(newValue.getText().toString(), nextmcq.getText().toString());
-                setMcqs();
-                break;
-            case R.id.option3:
-                newValue = findViewById(R.id.option3);
-                nextmcq = findViewById(R.id.question);
-                questioncount.setText(text);
-                checkCorrectness(newValue.getText().toString(), nextmcq.getText().toString());
-                setMcqs();
-                break;
-            case R.id.option4:
-                newValue = findViewById(R.id.option4);
-                nextmcq = findViewById(R.id.question);
-                questioncount.setText(text);
-                checkCorrectness(newValue.getText().toString(), nextmcq.getText().toString());
-                setMcqs();
-                break;
+        if (counter <= 11) {
+            totalcount++;
+            counter++;
+            String text = String.valueOf(counter);
+            Button newValue;
+            TextView nextmcq;
+            switch (view.getId()) {
+                case R.id.option1:
+                    newValue = findViewById(R.id.option1);
+                    nextmcq = findViewById(R.id.question);
+                    questioncount.setText(text);
+                    checkCorrectness(newValue.getText().toString(), nextmcq.getText().toString());
+                    break;
+                case R.id.option2:
+                    newValue = findViewById(R.id.option2);
+                    nextmcq = findViewById(R.id.question);
+                    questioncount.setText(text);
+                    checkCorrectness(newValue.getText().toString(), nextmcq.getText().toString());
+                    break;
+                case R.id.option3:
+                    newValue = findViewById(R.id.option3);
+                    nextmcq = findViewById(R.id.question);
+                    questioncount.setText(text);
+                    checkCorrectness(newValue.getText().toString(), nextmcq.getText().toString());
+                    break;
+                case R.id.option4:
+                    newValue = findViewById(R.id.option4);
+                    nextmcq = findViewById(R.id.question);
+                    questioncount.setText(text);
+                    checkCorrectness(newValue.getText().toString(), nextmcq.getText().toString());
+                    break;
+            }
+            setMcqs();
+        }
+        else {
+            TextViewCorrect.setText("Game Over" );
+            String finalscore=Score();
+            Log.d(finalscore, "finalscore ");
+            Intent intt = new Intent(MainActivity.this, ResultscreenActivity.class);
+
+            //String message =  "Hassan"; //editText.getText().toString();
+            intt.putExtra("key", finalscore);
+            startActivity(intt);
         }
     }
 }
