@@ -4,189 +4,38 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Switch;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+    Button login;
 
-    String [] mcq1 = {"In multilevel inheritance, which is the most significant feature of OOP used?", "Code efficiency", "Code readability", "Flexibility", "Code reusability", "Code reusability"};
-    String [] mcq2 = {"How many types of access specifiers are provided in OOP (C++)?", "1", "2", "3", "4", "3"};
-    String [] mcq3 = {"Which among the following doesn’t come under OOP concept?", "Data Hiding", "Message Passing", "Platform Independent", "Data binding", "Platform Independent"};
-    String [] mcq4 = {"Which header file is required in C++ to use OOP?","stdlib.h", "iostream.h", "stdio.h","Not needed", "Not needed"};
-    String [] mcq5 = {"Which feature of OOP indicates code reusability?", "Abstraction", "Polymorphism", "Encapsulation", "Inheritance", "Inheritance"};
-    String [] mcq6 = {"Which was the first purely object oriented programming language developed?", "kotlin", "SmallTalk", "Java", "C++", "SmallTalk"};
-    String [] mcq7 = {"Which access specifier is usually used for data members of a class?", "Protected", "Private","Public", "Default", "Private"};
-    String [] mcq8 = {"Which feature of OOP reduces the use of nested classes?", "Inheritance", "Binding", "Abstraction", "Encapsulation", "Inheritance"};
-    String [] mcq9 = {"Which keyword among the following can be used to declare an array of objects in java?", "Allocate", "arr", "new", "create", "new"};
-    String [] mcq10 = {"How to access data members of a class?", "Dot, arrow", "Dot Operator", "Arrow Operator", "Dot or arrow as required", "Dot or arrow as required"};
-
-    Button a, b, c, d;
-    TextView questioncount, question;
-
-    //Populate it to generate Random mcqs
-    String randomquestions = "";
-
-    //popoulate to generate Random options
-    String randomoptions = "";
-
-    //Correct Answers
-
-    ArrayList<String[]> allmcqs = new ArrayList<String[]>();
-
-    //totalcount
-
-    int totalcount = 0;
-    int counter = 1;
-    int totalcorrect = 0;
-
-    ArrayList<String> resultCard = new ArrayList<String>();
+    String username = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        a = findViewById(R.id.option1);
-        a.setOnClickListener(this);
-        b = findViewById(R.id.option2);
-        b.setOnClickListener(this);
-        c = findViewById(R.id.option3);
-        c.setOnClickListener(this);
-        d = findViewById(R.id.option4);
-        d.setOnClickListener(this);
-        question = findViewById(R.id.question);
-        questioncount = findViewById(R.id.questioncount);
-
-        allmcqs.add(mcq1);
-        allmcqs.add(mcq2);
-        allmcqs.add(mcq3);
-        allmcqs.add(mcq4);
-        allmcqs.add(mcq5);
-        allmcqs.add(mcq6);
-        allmcqs.add(mcq7);
-        allmcqs.add(mcq8);
-        allmcqs.add(mcq9);
-        allmcqs.add(mcq10);
-
-        generaterandQuestions();
-        generaterandOptions();
-        char e = randomquestions.charAt(0);
-        int f = Character.getNumericValue(e);
-        String [] setmcq = allmcqs.get(f);
-        question.setText(setmcq[0]);
-
-        a.setText(setmcq[Character.getNumericValue(randomoptions.charAt(0))]);
-        b.setText(setmcq[Character.getNumericValue(randomoptions.charAt(1))]);
-        c.setText(setmcq[Character.getNumericValue(randomoptions.charAt(2))]);
-        d.setText(setmcq[Character.getNumericValue(randomoptions.charAt(3))]);
+        login = findViewById(R.id.login);
+        login.setOnClickListener(this);
     }
-
-
-    public void generaterandQuestions() {
-        Integer i = 0;
-        Random random = new Random();
-        while (i < 10 ) {
-            Integer num = random.nextInt(10);
-            if (!randomquestions.contains(num.toString())) {
-                i++;
-                randomquestions += num;
-            }
-        }
+    public void checkCredientials(String naam) {
+        int i = 0;
     }
-    public void generaterandOptions() {
-        Integer i = 0;
-        Random random = new Random();
-        while (i < 4 ) {
-            Integer num = random.nextInt(4) + 1;
-            if (!randomoptions.contains(num.toString())) {
-                i++;
-                randomoptions += num;
-            }
-        }
-    }
-
-    public void setMcqs() {
-        if (counter < 11) {
-            char nextindex = randomquestions.charAt(totalcount);
-            int realindex = Character.getNumericValue(nextindex);
-            String [] getvalue = allmcqs.get(realindex);
-            String mcqvalue = getvalue[0];
-            question.setText(mcqvalue);
-            a.setText(getvalue[Character.getNumericValue(randomoptions.charAt(0))]);
-            b.setText(getvalue[Character.getNumericValue(randomoptions.charAt(1))]);
-            c.setText(getvalue[Character.getNumericValue(randomoptions.charAt(2))]);
-            d.setText(getvalue[Character.getNumericValue(randomoptions.charAt(3))]);
-        }
-        else {
-            Intent intt = new Intent(MainActivity.this, ResultScreen.class);
-            Bundle bundle = new Bundle();
-            bundle.putStringArrayList("resultCard", resultCard);
-            bundle.putString("correctAns", String.valueOf(totalcorrect));
-            intt.putExtras(bundle);
-            startActivity(intt);
-        }
-    }
-
-    public void checkCorrectness (String option, String value) {
-        String [] mcq = {};
-        String oldvalue = "";
-        StringBuilder result = new StringBuilder(value + "\nSelected: " + option + "\nCorrect: ");
-
-        for (int i = 0; i < allmcqs.size(); i++) {
-            mcq = allmcqs.get(i);
-            oldvalue = mcq[0];
-            String correctOption = mcq[mcq.length-1];
-            if (oldvalue.equals(value) ) {
-                result.append(correctOption);
-                if (correctOption.equals(option)) {
-                    totalcorrect++;
-                }
-            }
-        }
-        resultCard.add(result.toString());
-    }
-
     @Override
     public void onClick(View view) {
-            totalcount++;
-            counter++;
-            String text = String.valueOf(counter);
-            Button newValue;
-            TextView nextmcq;
-            switch (view.getId()) {
-                case R.id.option1:
-                    newValue = findViewById(R.id.option1);
-                    nextmcq = findViewById(R.id.question);
-                    questioncount.setText(text);
-                    checkCorrectness(newValue.getText().toString(), nextmcq.getText().toString());
-                    break;
-                case R.id.option2:
-                    newValue = findViewById(R.id.option2);
-                    nextmcq = findViewById(R.id.question);
-                    questioncount.setText(text);
-                    checkCorrectness(newValue.getText().toString(), nextmcq.getText().toString());
-                    break;
-                case R.id.option3:
-                    newValue = findViewById(R.id.option3);
-                    nextmcq = findViewById(R.id.question);
-                    questioncount.setText(text);
-                    checkCorrectness(newValue.getText().toString(), nextmcq.getText().toString());
-                    break;
-                case R.id.option4:
-                    newValue = findViewById(R.id.option4);
-                    nextmcq = findViewById(R.id.question);
-                    questioncount.setText(text);
-                    checkCorrectness(newValue.getText().toString(), nextmcq.getText().toString());
-                    break;
-            }
-            setMcqs();
+        switch (view.getId()) {
+            case R.id.login:
+                Intent intt = new Intent(MainActivity.this, Login.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putStringArrayList("resultCard", resultCard);
+//                bundle.putString("correctAns", String.valueOf(totalcorrect));
+//                intt.putExtras(bundle);
+                String name = "";
+                name = username;
+                checkCredientials(name);
+                startActivity(intt);
+                break;
+        }
     }
 }
