@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class ResultScreen extends AppCompatActivity implements Serializable {
     ListView listView;
     TextView textView, percentage;
-
+    Button share;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +25,7 @@ public class ResultScreen extends AppCompatActivity implements Serializable {
         listView = findViewById(R.id.list_view);
         textView = findViewById(R.id.textView);
         percentage = findViewById(R.id.percentage);
-
+        share = findViewById(R.id.share);
         Bundle bundle = getIntent().getExtras();
         String correct = bundle.getString("correctAns");
 
@@ -40,5 +40,17 @@ public class ResultScreen extends AppCompatActivity implements Serializable {
         percentage.setText(per);
         correct = "Total Correct: " + correct;
         textView.setText(correct);
+
+        String send = correct + "\n" + per;
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, send);
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+            }
+        });
     }
 }
