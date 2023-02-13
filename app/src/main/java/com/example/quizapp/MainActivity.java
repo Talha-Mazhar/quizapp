@@ -2,7 +2,10 @@ package com.example.quizapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
@@ -45,8 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int counter = 1;
     int totalcorrect = 0;
 
-    ArrayList<String> selectedData = new ArrayList<String>();
-    ArrayList<String[]> resultCard = new ArrayList<String[]>();
+    ArrayList<String> resultCard = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void setMcqs() {
-        if (counter <= 11) {
+        if (counter < 11) {
             char nextindex = randomquestions.charAt(totalcount);
             int realindex = Character.getNumericValue(nextindex);
             String [] getvalue = allmcqs.get(realindex);
@@ -123,27 +125,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             c.setText(getvalue[Character.getNumericValue(randomoptions.charAt(2))]);
             d.setText(getvalue[Character.getNumericValue(randomoptions.charAt(3))]);
         }
+        else {
+            Intent intt = new Intent(MainActivity.this, ResultScreen.class);
+            Bundle bundle = new Bundle();
+            bundle.putStringArrayList("resultCard", resultCard);
+            bundle.putString("correctAns", String.valueOf(totalcorrect));
+            intt.putExtras(bundle);
+            startActivity(intt);
+        }
     }
 
     public void checkCorrectness (String option, String value) {
-        selectedData.add(value);
         String [] mcq = {};
         String oldvalue = "";
+        StringBuilder result = new StringBuilder(value + "\nSelected: " + option + "\nCorrect: ");
+
         for (int i = 0; i < allmcqs.size(); i++) {
             mcq = allmcqs.get(i);
             oldvalue = mcq[0];
             String correctOption = mcq[mcq.length-1];
-            if (oldvalue.equals(value) && correctOption.equals(option)) {
-                selectedData.add(correctOption);
-                selectedData.add(option);
-                totalcorrect++;
+            if (oldvalue.equals(value) ) {
+                result.append(correctOption);
+                if (correctOption.equals(option)) {
+                    totalcorrect++;
+                }
             }
         }
+        resultCard.add(result.toString());
     }
 
     @Override
     public void onClick(View view) {
-        if (counter <= 11) {
             totalcount++;
             counter++;
             String text = String.valueOf(counter);
@@ -176,16 +188,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
             }
             setMcqs();
-        }
-        else {
-            TextViewCorrect.setText("Game Over" );
-            String finalscore=Score();
-            Log.d(finalscore, "finalscore ");
-            Intent intt = new Intent(MainActivity.this, ResultscreenActivity.class);
-
-            //String message =  "Hassan"; //editText.getText().toString();
-            intt.putExtra("key", finalscore);
-            startActivity(intt);
-        }
     }
 }

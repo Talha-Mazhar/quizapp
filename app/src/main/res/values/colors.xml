@@ -8,6 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="background">#5F1939</color>
+    <color name="ButtonColor">#5C0E31</color>
+    <color name="score">#3B13F0</color>
     <color name="gray92">#EBEBEB</color>
 </resources>
 
