@@ -10,28 +10,27 @@ import android.widget.TextView;
 
 public class Profile extends AppCompatActivity implements View.OnClickListener {
 
-    Button checkresult, newquiz, back;
-    TextView showuser;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        checkresult.findViewById(R.id.checkresult);
-        checkresult.setOnClickListener(this);
-        newquiz.findViewById(R.id.takequiz);
-        newquiz.setOnClickListener(this);
-        back.findViewById(R.id.back);
-        back.setOnClickListener(this);
+        Button checkresultbtn = (Button) findViewById(R.id.checkresult);
+        Button newquizbtn = (Button) findViewById(R.id.takequiz);
+        Button backbtn = (Button) findViewById(R.id.back);
 
-        showuser.findViewById(R.id.user);
+        TextView showuser = (TextView) findViewById(R.id.user);
+
+        checkresultbtn.setOnClickListener(this);
+        newquizbtn.setOnClickListener(this);
+        backbtn.setOnClickListener(this);
+
 
         //take data from intent and show username
 
         Bundle bundle = getIntent().getExtras();
-        String userName = bundle.getString("user");
-
+        String userName = bundle.getString("userName");
+        userName = "Welcome " + userName;
         showuser.setText(userName);
     }
 
