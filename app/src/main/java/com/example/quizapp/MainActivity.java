@@ -47,11 +47,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.login:
                 Intent intt = new Intent(MainActivity.this, Profile.class);
-//                Bundle bundle = new Bundle();
+                Bundle bundle = new Bundle();
 //                bundle.putStringArrayList("resultCard", resultCard);
 //                bundle.putString("correctAns", String.valueOf(totalcorrect));
 //                intt.putExtras(bundle);
 
+                bundle.putString("UserName", naam);
+                intt.putExtras(bundle);
                 startActivity(intt);
                 break;
         }

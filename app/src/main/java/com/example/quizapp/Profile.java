@@ -2,6 +2,7 @@ package com.example.quizapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,7 +29,10 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
         //take data from intent and show username
 
-        showuser.setText("Talha");
+        Bundle bundle = getIntent().getExtras();
+        String userName = bundle.getString("user");
+
+        showuser.setText(userName);
     }
 
     @Override
@@ -37,8 +41,11 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
             case R.id.checkresult:
                 break;
             case R.id.takequiz:
+                Intent intt = new Intent(Profile.this, Login.class);
+                startActivity(intt);
                 break;
             case R.id.back:
+                System.exit(0);
                 break;
         }
     }

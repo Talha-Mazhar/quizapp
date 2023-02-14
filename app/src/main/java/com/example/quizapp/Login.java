@@ -121,12 +121,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             d.setText(getvalue[Character.getNumericValue(randomoptions.charAt(3))]);
         }
         else {
-            Intent intt = new Intent(Login.this, ResultScreen.class);
-            Bundle bundle = new Bundle();
-            bundle.putStringArrayList("resultCard", resultCard);
-            bundle.putString("correctAns", String.valueOf(totalcorrect));
-            intt.putExtras(bundle);
-            startActivity(intt);
+//            Intent intt = new Intent(Login.this, ResultScreen.class);
+//            Bundle bundle = new Bundle();
+//            bundle.putStringArrayList("resultCard", resultCard);
+//            bundle.putString("correctAns", String.valueOf(totalcorrect));
+//            intt.putExtras(bundle);
+//            startActivity(intt);
         }
     }
 
