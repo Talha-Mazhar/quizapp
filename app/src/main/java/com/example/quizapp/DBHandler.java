@@ -92,11 +92,46 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Quiz> getQuizesData(int userid) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT createid FROM quizes WHERE user=" + userid,null);
-        ArrayList<Quiz> userQuizes = new ArrayList<>();
 
+        Cursor cursor = db.rawQuery("SELECT * FROM results",null);
+
+        ArrayList<Quiz> requiredData = new ArrayList<Quiz>();
+        ArrayList<Quiz> userQuizes = new ArrayList<Quiz>();
+        ArrayList<Integer> quizID = new ArrayList<Integer>();
+
+        quizID = getuserQuizesId(userid);
+
+        if (cursor.moveToFirst()) {
+            do {
+                // on below line we are adding the data from cursor to our array list.
+                userQuizes.add(new Quiz(cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4)
+                        ));
+            } while (cursor.moveToNext());
+            // moving our cursor to next.
+        }
+
+        db.close();
+
+        for (int i = 0; i <= quizID.size(); i++) {
+            for (int y = 0; y <= userQuizes.size(); y++) {
+                if (userQuizes.get(i).getId() != quizID.get(i)) {
+                    requiredData.add(userQuizes.get(i));
+                }
+            }
+        }
+        return requiredData;
+    }
+
+    public ArrayList<Integer> getuserQuizesId(int userID) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Integer> quizids = new ArrayList<Integer>();
 
+        Cursor cursor = db.rawQuery("SELECT createid FROM quizes WHERE user=" + userID,null);
         if (cursor.moveToFirst()) {
             do {
                 // on below line we are adding the data from cursor to our array list.
@@ -108,9 +143,6 @@ public class DBHandler extends SQLiteOpenHelper {
         // and returning our array list.
         cursor.close();
 
-        Cursor cursorQuizes = db.rawQuery("SELECT createid FROM quizes WHERE user=" + userid,null);
-
-        return userQuizes;
+        return quizids;
     }
-
 }
