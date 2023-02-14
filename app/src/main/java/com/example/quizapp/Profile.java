@@ -28,7 +28,6 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
         //take data from intent and show username
 
-
         showuser.setText("Talha");
     }
 

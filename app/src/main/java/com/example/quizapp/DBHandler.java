@@ -30,15 +30,16 @@ public class DBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-//    public void insertRecord() {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//
-//        ContentValues values = new ContentValues();
-//
-//
-//        //db.insert(TABLE_NAME, null, values);
-//        db.close();
-//    }
+    public void insertRecord(String naam) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put("username", naam);
+
+        db.insert("users", null, values);
+        db.close();
+    }
 
 //    public List<String> selectAllresults() {
 //        List<String> totalresult = new ArrayList<>();
@@ -69,7 +70,47 @@ public class DBHandler extends SQLiteOpenHelper {
 //       return totalresult;
 //    }
 
-    public void setUserData(String name) {
+    public ArrayList<Users> getUserData(String name) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM users",null);
+        ArrayList<Users> users_username = new ArrayList<>();
 
+        if (cursor.moveToFirst()) {
+            do {
+                // on below line we are adding the data from cursor to our array list.
+                users_username.add(new Users(cursor.getInt(0),
+                        cursor.getString(1)));
+            } while (cursor.moveToNext());
+            // moving our cursor to next.
+        }
+        // at last closing our cursor
+        // and returning our array list.
+        cursor.close();
+        return users_username;
     }
+
+
+    public ArrayList<Quiz> getQuizesData(int userid) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT createid FROM quizes WHERE user=" + userid,null);
+        ArrayList<Quiz> userQuizes = new ArrayList<>();
+
+        ArrayList<Integer> quizids = new ArrayList<Integer>();
+
+        if (cursor.moveToFirst()) {
+            do {
+                // on below line we are adding the data from cursor to our array list.
+                quizids.add(cursor.getInt(0));
+            } while (cursor.moveToNext());
+            // moving our cursor to next.
+        }
+        // at last closing our cursor
+        // and returning our array list.
+        cursor.close();
+
+        Cursor cursorQuizes = db.rawQuery("SELECT createid FROM quizes WHERE user=" + userid,null);
+
+        return userQuizes;
+    }
+
 }
