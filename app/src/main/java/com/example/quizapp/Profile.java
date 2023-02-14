@@ -29,9 +29,11 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         //take data from intent and show username
 
         Bundle bundle = getIntent().getExtras();
-        String userName = bundle.getString("userName");
-        userName = "Welcome " + userName;
-        showuser.setText(userName);
+        if (bundle != null) {
+            String userName = bundle.getString("UserName");
+            userName = "Welcome " + userName;
+            showuser.setText(userName);
+        }
     }
 
     @Override

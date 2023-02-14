@@ -27,15 +27,6 @@ public class MainActivity extends AppCompatActivity {
         dbHandler = new DBHandler(this);
         database = dbHandler.getWritableDatabase();
 
-//        ArrayList<Users> getuserData = new ArrayList<Users>();
-//        getuserData = dbHandler.getUserData(naam);
-//
-//        for (int i = 0; i <= getuserData.size(); i++) {
-//            if (!getuserData.get(i).getUsername().equals(naam)) {
-//                dbHandler.insertRecord(naam);
-//            }
-//        }
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,15 +36,37 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Please enter Username..", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    Intent intt = new Intent(MainActivity.this, Profile.class);
-                    Bundle bundle = new Bundle();
-//                bundle.putStringArrayList("resultCard", resultCard);
-//                bundle.putString("correctAns", String.valueOf(totalcorrect));
-//                intt.putExtras(bundle);
+                    ArrayList<Users> getuserData = new ArrayList<Users>();
+                    getuserData = dbHandler.getUserData(naam);
 
-                    bundle.putString("UserName", naam);
-                    intt.putExtras(bundle);
-                    startActivity(intt);
+                    if (!getuserData.isEmpty()){
+                        for (int i = 0; i <= getuserData.size(); i++) {
+                            if (!getuserData.get(i).getUsername().equals(naam)) {
+                                dbHandler.insertRecord(naam);
+                            }
+                        }
+                        Intent intt = new Intent(MainActivity.this, Profile.class);
+                        Bundle bundle = new Bundle();
+//                        bundle.putStringArrayList("resultCard", resultCard);
+//                        bundle.putString("correctAns", String.valueOf(totalcorrect));
+//                        intt.putExtras(bundle);
+
+                        bundle.putString("UserName", naam);
+                        intt.putExtras(bundle);
+                        startActivity(intt);
+                    }
+                    else {
+                        dbHandler.insertRecord(naam);
+                        Intent intt = new Intent(MainActivity.this, Profile.class);
+                        Bundle bundle = new Bundle();
+//                        bundle.putStringArrayList("resultCard", resultCard);
+//                        bundle.putString("correctAns", String.valueOf(totalcorrect));
+//                        intt.putExtras(bundle);
+
+                        bundle.putString("UserName", naam);
+                        intt.putExtras(bundle);
+                        startActivity(intt);
+                    }
                 }
             }
         });
