@@ -57,4 +57,9 @@ public class Quiz {
             this.correct = correct;
             this.resultCase = resultCase;
         }
+
+    @Override
+    public String toString() {
+        return  getmcqdesc() + "\n" + getSelected() + "\n" + getCorrect() + "\n" + getResultCase();
+    }
     }

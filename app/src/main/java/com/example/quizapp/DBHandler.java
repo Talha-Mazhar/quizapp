@@ -94,13 +94,13 @@ public class DBHandler extends SQLiteOpenHelper {
     public ArrayList<Quiz> getQuizesData(int userid) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM results",null);
+        Cursor cursor = db.rawQuery("SELECT * FROM results WHERE quizid=" + "userid",null);
 
-        ArrayList<Quiz> requiredData = new ArrayList<Quiz>();
+        //ArrayList<Quiz> requiredData = new ArrayList<Quiz>();
         ArrayList<Quiz> userQuizes = new ArrayList<Quiz>();
-        ArrayList<Integer> quizID = new ArrayList<Integer>();
-
-        quizID = getuserQuizesId(userid);
+//        ArrayList<Integer> quizID = new ArrayList<Integer>();
+//
+//        quizID = getuserQuizesId(userid);
 
         if (cursor.moveToFirst()) {
             do {
@@ -117,14 +117,14 @@ public class DBHandler extends SQLiteOpenHelper {
 
         db.close();
 
-        for (int i = 0; i <= quizID.size(); i++) {
-            for (int y = 0; y <= userQuizes.size(); y++) {
-                if (userQuizes.get(i).getId() != quizID.get(i)) {
-                    requiredData.add(userQuizes.get(i));
-                }
-            }
-        }
-        return requiredData;
+//        for (int i = 0; i <= quizID.size(); i++) {
+//            for (int y = 0; y <= userQuizes.size(); y++) {
+//                if (userQuizes.get(i).getId() != quizID.get(i)) {
+//                    requiredData.add(userQuizes.get(i));
+//                }
+//            }
+//        }
+        return userQuizes;
     }
 
     public ArrayList<Integer> getuserQuizesId(int userID) {
