@@ -44,6 +44,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     int totalcorrect = 0;
     DBHandler dbHandler;
     int QuizID = 0;
+    String userNaam = "";
     ArrayList<String> resultCard = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_login);
 
         dbHandler = new DBHandler(this);
+
+        Bundle bundle = getIntent().getExtras();
+
+        userNaam = bundle.getString("UserName");
 
         a = findViewById(R.id.option1);
         a.setOnClickListener(this);
@@ -80,6 +85,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         int f = Character.getNumericValue(e);
         String [] setmcq = allmcqs.get(f);
         question.setText(setmcq[0]);
+
+
 
         a.setText(setmcq[Character.getNumericValue(randomoptions.charAt(0))]);
         b.setText(setmcq[Character.getNumericValue(randomoptions.charAt(1))]);
@@ -161,7 +168,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 }
             }
         }
-        Quiz data = Quiz();
+        Quiz data = new Quiz(QuizID, value, option, correct, resultCase);
+        dbHandler.insertResut(data);
         resultCard.add(result.toString());
     }
 
@@ -198,6 +206,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 checkCorrectness(newValue.getText().toString(), nextmcq.getText().toString());
                 break;
         }
-        setMcqs();
+        setMcqs(userNaam);
     }
 }
