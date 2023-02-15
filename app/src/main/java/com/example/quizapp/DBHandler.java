@@ -94,11 +94,14 @@ public class DBHandler extends SQLiteOpenHelper {
     public ArrayList<Quiz> getQuizesData(int userid) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM results WHERE quizid=" + "userid",null);
+//        String sql = "SELECT * FROM results WHERE quizid = " + Integer.toString(userid) ;
+        String sql = "SELECT * FROM results" ;
+
+        Cursor cursor = db.rawQuery(sql ,null);
 
         //ArrayList<Quiz> requiredData = new ArrayList<Quiz>();
         ArrayList<Quiz> userQuizes = new ArrayList<Quiz>();
-//        ArrayList<Integer> quizID = new ArrayList<Integer>();
+//        ArrayList<Integer> quizID = new ArrayList<Integer>();talha
 //
 //        quizID = getuserQuizesId(userid);
 

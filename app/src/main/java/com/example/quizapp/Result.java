@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class Result extends AppCompatActivity {
 
+    ArrayList<Quiz> data = new ArrayList<Quiz>();
     DBHandler dbHandler;
     ListView result;
     @Override
@@ -22,9 +23,9 @@ public class Result extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         int id = bundle.getInt("quizid");
-        ArrayList<Quiz> data = new ArrayList<Quiz>();
         Log.d("id", Integer.toString(id));
         data = dbHandler.getQuizesData(id);
+
 
         ArrayAdapter<Quiz> adpt = new ArrayAdapter<Quiz>(this, android.R.layout.simple_list_item_1, data);
         result.setAdapter(adpt);
