@@ -55,7 +55,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         Bundle bundle = getIntent().getExtras();
 
-        userNaam = bundle.getString("UserName");
+        userNaam = bundle.getString("naam");
 
         a = findViewById(R.id.option1);
         a.setOnClickListener(this);

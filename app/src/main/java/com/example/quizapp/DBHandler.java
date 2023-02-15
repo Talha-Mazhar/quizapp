@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -149,30 +150,55 @@ public class DBHandler extends SQLiteOpenHelper {
     public int generateQuizID(String naam) {
         SQLiteDatabase db = this.getWritableDatabase();
 
+        ArrayList<String> usersName = new ArrayList<String>();
+
         ContentValues values = new ContentValues();
 
-        Cursor cursor = db.rawQuery("SELECT userid FROM users WHERE username=" + naam,null);
+        ArrayList<quizes> usersIDs = new ArrayList<quizes>();
 
-        values.put("user", cursor.getInt(0));
+        Cursor cursor = db.rawQuery("SELECT * FROM users",null);
+
+        if(cursor.moveToFirst())  //By the way no need of this.(cursor is already on start).
+        {
+            while (cursor.moveToNext()) {
+                usersIDs.add(new quizes(cursor.getInt(0), cursor.getString(1)));
+            }
+        }
+
+        quizes q = new quizes();
+        for(quizes stdt : usersIDs)
+        {
+            if(stdt.getUsername() == naam)
+            {
+                q.setId(stdt.getId());
+            }
+        }
+
+        int userid = q.getId();
+
+        values.put("user", userid);
 
         db.insert("quizes", null, values);
         db.close();
 
-        Cursor uniqueID = db.rawQuery("SELECT createid FROM quizes WHERE user=" + cursor.getInt(0),null);
 
-        ArrayList<Integer> quizID = new ArrayList<Integer>();
+        SQLiteDatabase dba = this.getWritableDatabase();
+        Cursor uniqueID = dba.rawQuery("SELECT * FROM quizes",null);
+
+        ArrayList<SpecialId> d = new ArrayList<SpecialId>();
 
         if (uniqueID.moveToFirst()) {
             do {
                 // on below line we are adding the data from cursor to our array list.
-                quizID.add(uniqueID.getInt(0));
+                d.add(new SpecialId(uniqueID.getInt(0), uniqueID.getInt(1)));
             } while (uniqueID.moveToNext());
             // moving our cursor to next.
         }
 
-        int specialID = quizID.get(quizID.size()-1);
 
-        return specialID;
+        dba.close();
+
+        return d.get(d.size()-1).getSpecial();
     }
 
 
@@ -189,5 +215,30 @@ public class DBHandler extends SQLiteOpenHelper {
 
         db.insert("results", null, values);
         db.close();
+    }
+
+
+    public int getUserId (String Naam) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM users",null);
+
+        ArrayList<quizes> usersIDs = new ArrayList<quizes>();
+        if(cursor.moveToFirst())  //By the way no need of this.(cursor is already on start).
+        {
+            while (cursor.moveToNext()) {
+                usersIDs.add(new quizes(cursor.getInt(0), cursor.getString(1)));
+            }
+        }
+
+        quizes q = new quizes();
+        for(quizes stdt : usersIDs)
+        {
+            if(stdt.getUsername() == Naam)
+            {
+                q.setId(stdt.getId());
+            }
+        }
+
+        return q.getId();
     }
 }

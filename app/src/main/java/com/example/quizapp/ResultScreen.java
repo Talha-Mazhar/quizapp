@@ -53,11 +53,11 @@ public class ResultScreen extends AppCompatActivity implements Serializable {
                 startActivity(sendIntent);
             }
         });
-        backbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.exit(0);
-            }
-        });
+//        backbtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                System.exit(0);
+//            }
+//        });
     }
 }
