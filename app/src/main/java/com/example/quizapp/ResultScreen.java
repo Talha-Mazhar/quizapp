@@ -16,11 +16,12 @@ import java.util.ArrayList;
 public class ResultScreen extends AppCompatActivity implements Serializable {
     ListView listView;
     TextView textView, percentage;
-    Button share;
+    Button share, backbtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_screen);
+
 
         listView = findViewById(R.id.list_view);
         textView = findViewById(R.id.textView);
@@ -50,6 +51,12 @@ public class ResultScreen extends AppCompatActivity implements Serializable {
                 sendIntent.putExtra(Intent.EXTRA_TEXT, send);
                 sendIntent.setType("text/plain");
                 startActivity(sendIntent);
+            }
+        });
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.exit(0);
             }
         });
     }

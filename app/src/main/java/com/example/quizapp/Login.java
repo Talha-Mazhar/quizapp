@@ -42,12 +42,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     int totalcount = 0;
     int counter = 1;
     int totalcorrect = 0;
-
+    DBHandler dbHandler;
+    int QuizID = 0;
     ArrayList<String> resultCard = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        dbHandler = new DBHandler(this);
 
         a = findViewById(R.id.option1);
         a.setOnClickListener(this);
@@ -108,7 +111,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    public void setMcqs() {
+    public void setMcqs(String naam) {
         if (counter < 11) {
             char nextindex = randomquestions.charAt(totalcount);
             int realindex = Character.getNumericValue(nextindex);
@@ -121,12 +124,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             d.setText(getvalue[Character.getNumericValue(randomoptions.charAt(3))]);
         }
         else {
-//            Intent intt = new Intent(Login.this, ResultScreen.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putStringArrayList("resultCard", resultCard);
-//            bundle.putString("correctAns", String.valueOf(totalcorrect));
-//            intt.putExtras(bundle);
-//            startActivity(intt);
+            QuizID = dbHandler.generateQuizID(naam);
+            Intent intt = new Intent(Login.this, ResultScreen.class);
+            Bundle bundle = new Bundle();
+            bundle.putStringArrayList("resultCard", resultCard);
+            bundle.putString("correctAns", String.valueOf(totalcorrect));
+            intt.putExtras(bundle);
+            startActivity(intt);
         }
     }
 
@@ -134,22 +138,30 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         String [] mcq = {};
         String oldvalue = "";
         StringBuilder result = new StringBuilder(value + "\nSelected: " + option + "\nCorrect: ");
+        String resultCase = "";
+        //option ----> selected
+        //value  ----> mcq
+        //getid
+        //correctOption ----> correct
+        String correct = "";
 
         for (int i = 0; i < allmcqs.size(); i++) {
             mcq = allmcqs.get(i);
             oldvalue = mcq[0];
             String correctOption = mcq[mcq.length-1];
             if (oldvalue.equals(value) ) {
+                correct = correctOption;
                 result.append(correctOption);
                 if (correctOption.equals(option)) {
-                    resultCard.add("true");
+                    resultCase = "true";
                     totalcorrect++;
                 }
                 else {
-                    resultCard.add("false");
+                    resultCase = "true";
                 }
             }
         }
+        Quiz data = Quiz();
         resultCard.add(result.toString());
     }
 

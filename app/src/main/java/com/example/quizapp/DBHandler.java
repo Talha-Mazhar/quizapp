@@ -145,4 +145,49 @@ public class DBHandler extends SQLiteOpenHelper {
 
         return quizids;
     }
+
+    public int generateQuizID(String naam) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        Cursor cursor = db.rawQuery("SELECT userid FROM users WHERE username=" + naam,null);
+
+        values.put("user", cursor.getInt(0));
+
+        db.insert("quizes", null, values);
+        db.close();
+
+        Cursor uniqueID = db.rawQuery("SELECT createid FROM quizes WHERE user=" + cursor.getInt(0),null);
+
+        ArrayList<Integer> quizID = new ArrayList<Integer>();
+
+        if (uniqueID.moveToFirst()) {
+            do {
+                // on below line we are adding the data from cursor to our array list.
+                quizID.add(uniqueID.getInt(0));
+            } while (uniqueID.moveToNext());
+            // moving our cursor to next.
+        }
+
+        int specialID = quizID.get(quizID.size()-1);
+
+        return specialID;
+    }
+
+
+    public void insertResut(Quiz quiz){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        //      values.put(COLUMN_datetime, qr.getDatetime());
+        values.put("quizid", quiz.getId());
+        values.put("mcq", quiz.getmcqdesc());
+        values.put("selected", quiz.getSelected());
+        values.put("correct", quiz.getCorrect());
+        values.put("isCorrect", quiz.getResultCase());
+
+        db.insert("results", null, values);
+        db.close();
+    }
 }

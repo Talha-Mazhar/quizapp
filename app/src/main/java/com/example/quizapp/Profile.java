@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 public class Profile extends AppCompatActivity implements View.OnClickListener {
 
+    String naam = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             String userName = bundle.getString("UserName");
+            naam = userName;
             userName = "Welcome " + userName;
             showuser.setText(userName);
         }
@@ -42,7 +45,11 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
             case R.id.checkresult:
                 break;
             case R.id.takequiz:
+
                 Intent intt = new Intent(Profile.this, Login.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("naam", naam);
+                intt.putExtras(bundle);
                 startActivity(intt);
                 break;
             case R.id.back:
